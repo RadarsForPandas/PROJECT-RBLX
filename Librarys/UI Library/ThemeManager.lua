@@ -28,7 +28,7 @@ end
 
 local Clamp = math.clamp
 
-function ThemeManager:UpdateColor(Theme, ColorType, ColorValue)
+function ThemeManager:UpdateColor(ColorType, ColorValue)
     local ColorType = ColorType:lower()
     Theme[ColorType] = ColorValue
     for Index, Value in pairs(Library.colors) do
@@ -40,13 +40,13 @@ function ThemeManager:UpdateColor(Theme, ColorType, ColorValue)
     end
 end
 
-function ThemeManager:UpdateTheme(Flags, ThemeType, ThemeValue)
+function ThemeManager:UpdateTheme(ThemeType, ThemeValue)
     if Flags["ConfigTheme_" .. ThemeType] then
         Flags["ConfigTheme_" .. ThemeType]:Set(ThemeValue)
     end
 end
 
-function ThemeManager:LoadTheme(Library, Flags, ThemeType)
+function ThemeManager:LoadTheme(ThemeType)
     if Themes[ThemeType] then
         local ThemeValue = game:GetService("HttpService"):JSONDecode(Themes[ThemeType][2])
         for Index, Value in pairs(ThemeValue) do
@@ -55,7 +55,7 @@ function ThemeManager:LoadTheme(Library, Flags, ThemeType)
     end
 end
 
-function ThemeManager:UpdateHue(Flags)
+function ThemeManager:UpdateHue()
     if (tick() - ShiftTick) >= (1 / 60) then
         Shift = Shift + 0.01
         local AccentEffect = Flags["ConfigTheme_AccentEffect"]:Get()
@@ -80,7 +80,7 @@ function ThemeManager:UpdateHue(Flags)
     end
 end
 
-function ThemeManager:AddTheme(Tab, Flags)
+function ThemeManager:AddTheme(Tab)
     local Config_Theme = Tab:Section({Name = "Theme"})
     Config_Theme:Dropdown({Name = "Theme", Flag = "ConfigTheme_Theme", Default = "Default", Max = 8, Options = GetTableIndexes(Themes, true)})
     Config_Theme:Button({Name = "Load", Callback = function() self:LoadTheme(Library, Flags, Flags["ConfigTheme_Theme"]:Get()) end})
@@ -92,8 +92,8 @@ function ThemeManager:AddTheme(Tab, Flags)
     Config_Theme:Colorpicker({Name = "Light Text", Flag = "ConfigTheme_LightText", Default = Color3.fromRGB(255, 255, 255), Callback = function(Color) self:UpdateColor(Library, "TextColor", Color) end})
     Config_Theme:Colorpicker({Name = "Dark Text", Flag = "ConfigTheme_DarkText", Default = Color3.fromRGB(175, 175, 175), Callback = function(Color) self:UpdateColor(Library, "TextDark", Color) end})
     Config_Theme:Colorpicker({Name = "Text Outline", Flag = "ConfigTheme_TextBorder", Default = Color3.fromRGB(0, 0, 0), Callback = function(Color) self:UpdateColor(Library, "TextBorder", Color) end})
-    Config_Theme:Colorpicker({Name = "Cursor Outline", Flag = "ConfigTheme_CursorOutline", Default = Color3.fromRGB(10, 10, 10), Callback = function(Color) self:UpdateColor(Library, "CursorOutline", Color) end})
-    Config_Theme:Dropdown({Name = "Accent Effect", Flag = "ConfigTheme_AccentEffect", Default = "None", Options = {"None", "Rainbow", "Shift", "Reverse Shift"}, Callback = function(State) if State == "None" then self:UpdateColor(Library, "Accent", Flags["ConfigTheme_Accent"]:Get()) end end})
+    Config_Theme:Colorpicker({Name = "Cursor Outline", Flag = "ConfigTheme_CursorOutline", Default = Color3.fromRGB(10, 10, 10), Callback = function(Color) self:UpdateColor("CursorOutline", Color) end})
+    Config_Theme:Dropdown({Name = "Accent Effect", Flag = "ConfigTheme_AccentEffect", Default = "None", Options = {"None", "Rainbow", "Shift", "Reverse Shift"}, Callback = function(State) if State == "None" then self:UpdateColor("Accent", Flags["ConfigTheme_Accent"]:Get()) end end})
     Config_Theme:Slider({Name = "Effect Length", Flag = "ConfigTheme_EffectLength", Default = 40, Maximum = 360, Minimum = 1, Decimals = 1})
     RunService.RenderStepped:Connect(ThemeManager:UpdateHue())
 end
