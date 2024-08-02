@@ -1,4 +1,4 @@
-
+local RunService = game:GetService("RunService")
 local Themes = {
     Default = {1, [[{"Outline":"000000","Accent":"5d3e98","LightText":"ffffff","DarkText":"afafaf","LightContrast":"1e1e1e","CursorOutline":"0a0a0a","DarkContrast":"141414","TextBorder":"000000","Inline":"323232"}]]},
     Abyss = {2, [[{"Outline":"0a0a0a","Accent":"8c87b4","LightText":"ffffff","DarkText":"afafaf","LightContrast":"1e1e1e","CursorOutline":"141414","DarkContrast":"141414","TextBorder":"0a0a0a","Inline":"2d2d2d"}]]},
@@ -95,6 +95,8 @@ function ThemeManager:AddTheme(Tab, Library, Flags)
     Config_Theme:Colorpicker({Name = "Cursor Outline", Flag = "ConfigTheme_CursorOutline", Default = Color3.fromRGB(10, 10, 10), Callback = function(Color) self:UpdateColor(Library, "CursorOutline", Color) end})
     Config_Theme:Dropdown({Name = "Accent Effect", Flag = "ConfigTheme_AccentEffect", Default = "None", Options = {"None", "Rainbow", "Shift", "Reverse Shift"}, Callback = function(State) if State == "None" then self:UpdateColor(Library, "Accent", Flags["ConfigTheme_Accent"]:Get()) end end})
     Config_Theme:Slider({Name = "Effect Length", Flag = "ConfigTheme_EffectLength", Default = 40, Maximum = 360, Minimum = 1, Decimals = 1})
+    RunService.RenderStepped:Connect(ThemeManager:UpdateHue())
 end
 
 return ThemeManager
+-- if you can see this I AM DEEPLY IN LOVE WITH YOU
