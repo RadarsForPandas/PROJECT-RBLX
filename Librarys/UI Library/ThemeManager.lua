@@ -62,7 +62,7 @@ function ThemeManager:UpdateHue(Library, Flags)
         local AccentColor = Flags["ConfigTheme_Accent"]:Get()
 
         if not AccentColor then
-            print("[WARNING] AccentColor is nil.")
+            print("AccentColor is nil.")
             return
         end
 
