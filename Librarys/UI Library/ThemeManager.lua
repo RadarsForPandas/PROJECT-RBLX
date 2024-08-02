@@ -28,7 +28,7 @@ end
 
 local Clamp = math.clamp
 
-function ThemeManager:UpdateColor(Library, Theme, ColorType, ColorValue)
+function ThemeManager:UpdateColor(Theme, ColorType, ColorValue)
     local ColorType = ColorType:lower()
     Theme[ColorType] = ColorValue
     for Index, Value in pairs(Library.colors) do
@@ -40,7 +40,7 @@ function ThemeManager:UpdateColor(Library, Theme, ColorType, ColorValue)
     end
 end
 
-function ThemeManager:UpdateTheme(Library, Flags, ThemeType, ThemeValue)
+function ThemeManager:UpdateTheme(Flags, ThemeType, ThemeValue)
     if Flags["ConfigTheme_" .. ThemeType] then
         Flags["ConfigTheme_" .. ThemeType]:Set(ThemeValue)
     end
@@ -55,7 +55,7 @@ function ThemeManager:LoadTheme(Library, Flags, ThemeType)
     end
 end
 
-function ThemeManager:UpdateHue(Library, Flags)
+function ThemeManager:UpdateHue(Flags)
     if (tick() - ShiftTick) >= (1 / 60) then
         Shift = Shift + 0.01
         local AccentEffect = Flags["ConfigTheme_AccentEffect"]:Get()
@@ -80,7 +80,7 @@ function ThemeManager:UpdateHue(Library, Flags)
     end
 end
 
-function ThemeManager:AddTheme(Tab, Library, Flags)
+function ThemeManager:AddTheme(Tab, Flags)
     local Config_Theme = Tab:Section({Name = "Theme"})
     Config_Theme:Dropdown({Name = "Theme", Flag = "ConfigTheme_Theme", Default = "Default", Max = 8, Options = GetTableIndexes(Themes, true)})
     Config_Theme:Button({Name = "Load", Callback = function() self:LoadTheme(Library, Flags, Flags["ConfigTheme_Theme"]:Get()) end})
