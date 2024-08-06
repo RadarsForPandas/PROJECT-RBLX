@@ -1,7 +1,7 @@
 local GamesFol = {
     {
         PlaceIDs = {301549746},
-        ScriptURL = "https://raw.githubusercontent.com/OperationFeather/Pandera-Client-V1/main/Games/301549746.lua"
+        ScriptURL = "https://raw.githubusercontent.com/RadarsForPandas/PROJECT-RBLX/main/Games/CBRA"
     }
 }
 
