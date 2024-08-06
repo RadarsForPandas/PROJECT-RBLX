@@ -1,4 +1,3 @@
--- DEBUG Prints are commmented, Will probably add a debug variable that can be pased through the loader's loadstring
 local GamesFol = {
     {
         PlaceIDs = {301549746},
